@@ -11,6 +11,23 @@ import Foundation
 struct StocksModel: Codable {
     var mypageDefaults: [MypageDefault]?
     var mypage: [Mypage]?
+    
+    enum CodingKeys: CodingKey {
+        case mypageDefaults
+        case mypage
+    }
+}
+
+// MARK: - MypageDefault
+struct MypageDefault: Codable {
+    var cod, gro, tke, def: String?
+    
+    enum CodingKeys: CodingKey {
+        case cod
+        case gro
+        case tke
+        case def
+    }
 }
 
 // MARK: - Mypage
@@ -18,17 +35,11 @@ struct Mypage: Codable {
     var name, key: String?
 }
 
-// MARK: - MypageDefault
-struct MypageDefault: Codable {
-    var cod, gro, tke, def: String?
-}
 
 
-
-
-
+// MARK: - Other URL
 // MARK: - Welcome2
-struct Welcome2: Codable {
+struct StocksDetailsModel: Codable {
     var l: [L]?
     var z: String?
 }

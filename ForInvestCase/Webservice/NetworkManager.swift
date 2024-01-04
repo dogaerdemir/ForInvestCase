@@ -13,9 +13,19 @@ enum ErrorType : Error {
 }
 
 enum URLs {
-    static let stock = "https://sui7963dq6.execute-api.eu-central-1.amazonaws.com/default/ForeksMobileInterviewSettings"
-    static let stockDetail = "https://sui7963dq6.execute-api.eu-central-1.amazonaws.com/default/ForeksMobileInterview?fields=pdd,las&stcs=GARAN.E.BIST~XU100.I.BIST"
+    /*static let stock = "https://sui7963dq6.execute-api.eu-central-1.amazonaws.com/default/ForeksMobileInterviewSettings"
+    static let stockDetail = "https://sui7963dq6.execute-api.eu-central-1.amazonaws.com/default/ForeksMobileInterview?fields=pdd,las&stcs=GARAN.E.BIST~XU100.I.BIST"*/
+    
+    private static let base = "https://sui7963dq6.execute-api.eu-central-1.amazonaws.com/default/"
+    static let stockSettingsURL = base + "ForeksMobileInterviewSettings"
+    
+    static func stockDetailURL(with tkeValues: [String]) -> String {
+        let tkeParameter = tkeValues.joined(separator: "~")
+        return base + "ForeksMobileInterview?fields=pdd,las&stcs=" + tkeParameter
+    }
 }
+
+
 
 class NetworkManager {
     static let shared = NetworkManager()
