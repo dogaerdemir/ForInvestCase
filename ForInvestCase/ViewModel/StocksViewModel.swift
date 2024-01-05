@@ -7,11 +7,29 @@
 
 import Foundation
 
+protocol StocksViewModelDelegate: AnyObject {
+    func didUpdateStockDetails()
+}
+
 class StocksViewModel {
     
-    var mypageDefaults: [MypageDefault] = []
-    var mypage: [Mypage] = []
-    var l: [L] = []
+    weak var delegate: StocksViewModelDelegate?
+    
+    private var timer: Timer?
+    
+    private var mypageDefaults: [MypageDefault] = []
+    private var mypage: [Mypage] = []
+    private var stocksDetails: [L] = []
+    
+    private var previousCloValues: [String: String] = [:]
+    
+    func updatePreviousCloValue(for cod: String, with value: String) {
+        previousCloValues[cod] = value
+    }
+    
+    func getPreviousCloValue(for cod: String) -> String? {
+        return previousCloValues[cod]
+    }
     
     func fetchStocksAndMenus(completion: @escaping (Result<String?, ErrorType>) -> Void) {
         NetworkManager.shared.fetchData(type: StocksModel.self, url: URLs.stockSettingsURL) { [weak self] result in
@@ -19,32 +37,48 @@ class StocksViewModel {
                 case .success(let data):
                     self?.mypageDefaults = data.mypageDefaults ?? []
                     self?.mypage = data.mypage ?? []
-                    NetworkManager.shared.fetchData(type: StocksDetailsModel.self, url: URLs.stockDetailURL(with: data.mypageDefaults?.compactMap({$0.tke}) ?? [])) { [weak self] result in
-                        switch result {
-                            case .success(let dataa):
-                                self?.l = dataa.l ?? []
-                                completion(.success(""))
-                            case .failure(let error):
-                                completion(.failure(error))
-                        }
-                    }
+                    self?.setupContinuousRequests(with: data.mypageDefaults?.compactMap { $0.tke } ?? [])
+                    completion(.success(""))
                 case .failure(let error):
                     completion(.failure(error))
             }
         }
     }
     
-    func fetchStockValues(completion: @escaping (Result<String?, ErrorType>) -> Void) {
-        
+    func setupContinuousRequests(with tkeValues: [String]) {
+        let detailURL = URLs.stockDetailURL(with: tkeValues)
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+                self?.fetchStockDetails(url: detailURL)
+            }
+            RunLoop.main.add(self.timer!, forMode: .common)
+        }
     }
     
-    func getStocks() -> [MypageDefault] {
+    func fetchStockDetails(url: String) {
+        NetworkManager.shared.fetchData(type: StocksDetailsModel.self, url: url) { [weak self] result in
+            switch result {
+                case .success(let dataa):
+                    self?.stocksDetails = dataa.l ?? []
+                    self?.delegate?.didUpdateStockDetails()
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getStocksInfo() -> [MypageDefault] {
         return mypageDefaults
     }
+    
+    func getStockInfo(at index: Int) -> MypageDefault {
+        return mypageDefaults[index]
+     }
     
     func getStocksCount() -> Int {
         return mypageDefaults.count
     }
+    
     
     func getMenus() -> [Mypage] {
         return mypage
@@ -54,11 +88,20 @@ class StocksViewModel {
         return mypage.count
     }
     
-    /*func getStock(at index: Int) -> String {
-        return stocks[index].mypageDefaults
-    }*/
+    func getMenu(at index: Int) -> Mypage {
+        return mypage[index]
+    }
     
-    /*func getStock(at index: Int) -> String {
-        return stocks[index].mypageDefaults?[0].def ?? ""
-    }*/
+    
+    func getStocksDetail() -> [L] {
+        return stocksDetails
+    }
+    
+    func getStockDetail(at index: Int) -> L {
+        return stocksDetails[index]
+    }
+    
+    func getStocksDetailCount() -> Int {
+        return stocksDetails.count
+    }
 }

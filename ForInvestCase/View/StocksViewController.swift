@@ -16,7 +16,7 @@ class StocksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        vm.delegate = self
         tableView.register(UINib(nibName: "StocksTableViewCell", bundle: nil), forCellReuseIdentifier: "tableViewCell")
         
         vm.fetchStocksAndMenus { [weak self] result in
@@ -33,18 +33,22 @@ class StocksViewController: UIViewController {
         }
     }
     
-    @IBAction func headerButtonTapped(_ sender: UIButton) {
+    func createMenu() -> UIMenu {
         var actions: [UIAction] = []
         
         for menuOption in vm.getMenus() {
-            let action = UIAction(title: menuOption.name ?? "Varsayılan İsim", handler: { _ in
-                print("\(menuOption.name ?? "İsim Yok") seçildi")
+            let action = UIAction(title: menuOption.name ?? "N/A", handler: { _ in
+                print("\(menuOption.name ?? "N/A") seçildi")
             })
             actions.append(action)
         }
-
-        let menu = UIMenu(title: "", children: actions)
         
+        let menu = UIMenu(title: "", children: actions)
+        return menu
+    }
+    
+    @IBAction func headerButtonTapped(_ sender: UIButton) {
+        let menu = createMenu()
         sender.menu = menu
         sender.showsMenuAsPrimaryAction = true
     }
@@ -58,10 +62,16 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell") as? StocksTableViewCell {
-            cell.nameLabel.text = vm.getStocks()[indexPath.row].cod
-            cell.clockLabel.text = vm.l[indexPath.row].clo
-            cell.variableLabelOne.text = vm.l[indexPath.row].las
-            cell.variableLabelTwo.text = vm.l[indexPath.row].pdd
+            if indexPath.row < vm.getStocksDetailCount() {
+                let stocks = vm.getStockInfo(at: indexPath.row)
+                let stockDetail = vm.getStockDetail(at: indexPath.row)
+                let previousClo = vm.getPreviousCloValue(for: stocks.cod ?? "line 68")
+                
+                let model = StockCellModel(stocks: stocks, stockDetail: stockDetail, previousClo: previousClo)
+                cell.configureCell(with: model)
+                
+                vm.updatePreviousCloValue(for: stocks.cod ?? "line 73-1", with: stockDetail.clo ?? "line 73-2")
+            }
             return cell
         }
         return UITableViewCell()
@@ -73,5 +83,13 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 60
+    }
+}
+
+extension StocksViewController: StocksViewModelDelegate {
+    func didUpdateStockDetails() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }

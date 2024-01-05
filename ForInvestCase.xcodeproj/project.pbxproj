@@ -18,6 +18,7 @@
 		DA46E5DF2B45D6C70070821A /* StocksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA46E5DD2B45D6C70070821A /* StocksTableViewCell.xib */; };
 		DA46E5E12B45F3D10070821A /* StocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46E5E02B45F3D10070821A /* StocksViewModel.swift */; };
 		DA46E5E42B45F4760070821A /* StocksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46E5E32B45F4750070821A /* StocksModel.swift */; };
+		DAA0C9BD2B4857A900D1A2A2 /* StockCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0C9BC2B4857A900D1A2A2 /* StockCellModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		DA46E5DD2B45D6C70070821A /* StocksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StocksTableViewCell.xib; sourceTree = "<group>"; };
 		DA46E5E02B45F3D10070821A /* StocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewModel.swift; sourceTree = "<group>"; };
 		DA46E5E32B45F4750070821A /* StocksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksModel.swift; sourceTree = "<group>"; };
+		DAA0C9BC2B4857A900D1A2A2 /* StockCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				DA46E5E32B45F4750070821A /* StocksModel.swift */,
+				DAA0C9BC2B4857A900D1A2A2 /* StockCellModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				DA46E5D82B45D4680070821A /* NetworkManager.swift in Sources */,
 				DA46E5C72B45997F0070821A /* StocksViewController.swift in Sources */,
 				DA46E5E42B45F4760070821A /* StocksModel.swift in Sources */,
+				DAA0C9BD2B4857A900D1A2A2 /* StockCellModel.swift in Sources */,
 				DA46E5C32B45997F0070821A /* AppDelegate.swift in Sources */,
 				DA46E5E12B45F3D10070821A /* StocksViewModel.swift in Sources */,
 				DA46E5C52B45997F0070821A /* SceneDelegate.swift in Sources */,

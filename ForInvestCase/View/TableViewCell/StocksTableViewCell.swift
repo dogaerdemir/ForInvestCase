@@ -23,9 +23,22 @@ class StocksTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    /*func configureCell(stock: StocksModel) {
-        indicatorImage.image = UIImage(named: "green_up")
+    func configureCell(with model: StockCellModel) {
+        nameLabel.text = model.stocks.cod
+        variableLabelOne.text = model.stockDetail.las
+        variableLabelTwo.text = model.stockDetail.pdd
         
-    }*/
+        if let previousClo = model.previousClo, previousClo != model.stockDetail.clo {
+            animateBackground()
+        }
+        clockLabel.text = model.stockDetail.clo
+    }
     
+    private func animateBackground() {
+        self.layer.removeAllAnimations()
+        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.allowUserInteraction], animations: {
+            self.backgroundColor = .clear
+        })
+    }
 }
