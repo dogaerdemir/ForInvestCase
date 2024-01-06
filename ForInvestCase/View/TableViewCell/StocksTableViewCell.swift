@@ -25,18 +25,22 @@ class StocksTableViewCell: UITableViewCell {
     
     func configureCell(with model: StockCellModel) {
         nameLabel.text = model.stocks.cod
-        variableLabelOne.text = model.stockDetail.las
-        variableLabelTwo.text = model.stockDetail.pdd
+        clockLabel.text = model.stockDetail.clo
         
+        if let keyForFirstButton = model.selectedKeyForFirstButton {
+            variableLabelOne.text = model.stockDetail.getValue(for: keyForFirstButton)
+        }
+        if let keyForSecondButton = model.selectedKeyForSecondButton {
+            variableLabelTwo.text = model.stockDetail.getValue(for: keyForSecondButton)
+        }
         if let previousClo = model.previousClo, previousClo != model.stockDetail.clo {
             animateBackground()
         }
-        clockLabel.text = model.stockDetail.clo
     }
     
     private func animateBackground() {
         self.layer.removeAllAnimations()
-        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
+        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
         UIView.animate(withDuration: 1.0, delay: 0.0, options: [.allowUserInteraction], animations: {
             self.backgroundColor = .clear
         })

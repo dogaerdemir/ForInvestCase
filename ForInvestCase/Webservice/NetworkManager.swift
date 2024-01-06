@@ -16,13 +16,12 @@ enum URLs {
     private static let base = "https://sui7963dq6.execute-api.eu-central-1.amazonaws.com/default/"
     static let stockSettingsURL = base + "ForeksMobileInterviewSettings"
     
-    static func stockDetailURL(with tkeValues: [String]) -> String {
+    static func stockDetailURL(with tkeValues: [String], forKeys keys: [String]) -> String {
         let tkeParameter = tkeValues.joined(separator: "~")
-        return base + "ForeksMobileInterview?fields=pdd,las&stcs=" + tkeParameter
+        let fieldsParameter = keys.joined(separator: ",")
+        return base + "ForeksMobileInterview?fields=" + fieldsParameter + "&stcs=" + tkeParameter
     }
 }
-
-
 
 class NetworkManager {
     static let shared = NetworkManager()

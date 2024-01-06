@@ -33,12 +33,19 @@ class StocksViewController: UIViewController {
         }
     }
     
-    func createMenu() -> UIMenu {
+    func createMenu(with button: UIButton) -> UIMenu {
         var actions: [UIAction] = []
         
         for menuOption in vm.getMenus() {
-            let action = UIAction(title: menuOption.name ?? "N/A", handler: { _ in
-                print("\(menuOption.name ?? "N/A") seçildi")
+            let action = UIAction(title: menuOption.name ?? "N/A", handler: { [weak self] _ in
+                if button.tag == 1 {
+                    self?.vm.selectedKeyForFirstButton = menuOption.key
+                } else if button.tag == 2 {
+                    self?.vm.selectedKeyForSecondButton = menuOption.key
+                }
+                button.setTitle(menuOption.name, for: .normal)
+                button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+                self?.tableView.reloadData()
             })
             actions.append(action)
         }
@@ -48,7 +55,7 @@ class StocksViewController: UIViewController {
     }
     
     @IBAction func headerButtonTapped(_ sender: UIButton) {
-        let menu = createMenu()
+        let menu = createMenu(with: sender)
         sender.menu = menu
         sender.showsMenuAsPrimaryAction = true
     }
@@ -65,12 +72,16 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.row < vm.getStocksDetailCount() {
                 let stocks = vm.getStockInfo(at: indexPath.row)
                 let stockDetail = vm.getStockDetail(at: indexPath.row)
-                let previousClo = vm.getPreviousCloValue(for: stocks.cod ?? "line 68")
+                let previousClo = vm.getPreviousCloValue(for: stocks.cod ?? "")
                 
-                let model = StockCellModel(stocks: stocks, stockDetail: stockDetail, previousClo: previousClo)
+                let model = StockCellModel(stocks: stocks,
+                                           stockDetail: stockDetail,
+                                           previousClo: previousClo,
+                                           selectedKeyForFirstButton: vm.selectedKeyForFirstButton,
+                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton)
                 cell.configureCell(with: model)
                 
-                vm.updatePreviousCloValue(for: stocks.cod ?? "line 73-1", with: stockDetail.clo ?? "line 73-2")
+                vm.updatePreviousCloValue(for: stocks.cod ?? "", with: stockDetail.clo ?? "")
             }
             return cell
         }
@@ -89,7 +100,11 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
 extension StocksViewController: StocksViewModelDelegate {
     func didUpdateStockDetails() {
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            if let indexPaths = self.tableView.indexPathsForVisibleRows {
+                self.tableView.reloadRows(at: indexPaths, with: .none)
+            } else {
+                print("No visible cells")
+            }
         }
     }
 }

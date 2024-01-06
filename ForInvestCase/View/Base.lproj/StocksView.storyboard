@@ -45,7 +45,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Symbol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9b-HM-akK">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sembol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9b-HM-akK">
                             <rect key="frame" x="16" y="21.666666666666668" width="80" height="17.000000000000004"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="17" id="OZe-Ku-nil"/>
@@ -55,7 +55,7 @@
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ovs-Qr-GAU">
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ovs-Qr-GAU">
                             <rect key="frame" x="209" y="17" width="70" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="26" id="T6S-4V-rHR"/>
@@ -70,7 +70,7 @@
                                 <action selector="headerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yxg-pq-FXL"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wk5-ZW-wi4">
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wk5-ZW-wi4">
                             <rect key="frame" x="315" y="17" width="70" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="uQo-Ou-15f"/>
@@ -103,7 +103,7 @@
     </scenes>
     <resources>
         <namedColor name="AppBackgroundColor">
-            <color red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

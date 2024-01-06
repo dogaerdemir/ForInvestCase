@@ -14,7 +14,6 @@ protocol StocksViewModelDelegate: AnyObject {
 class StocksViewModel {
     
     weak var delegate: StocksViewModelDelegate?
-    
     private var timer: Timer?
     
     private var mypageDefaults: [MypageDefault] = []
@@ -22,6 +21,9 @@ class StocksViewModel {
     private var stocksDetails: [L] = []
     
     private var previousCloValues: [String: String] = [:]
+    
+    var selectedKeyForFirstButton: String?
+    var selectedKeyForSecondButton: String?
     
     func updatePreviousCloValue(for cod: String, with value: String) {
         previousCloValues[cod] = value
@@ -37,7 +39,9 @@ class StocksViewModel {
                 case .success(let data):
                     self?.mypageDefaults = data.mypageDefaults ?? []
                     self?.mypage = data.mypage ?? []
-                    self?.setupContinuousRequests(with: data.mypageDefaults?.compactMap { $0.tke } ?? [])
+                    self?.selectedKeyForFirstButton = self?.mypage[0].key
+                    self?.selectedKeyForSecondButton = self?.mypage[1].key
+                    self?.setupContinuousRequests(with: data.mypageDefaults?.compactMap { $0.tke } ?? [], forKeys: data.mypage?.compactMap { $0.key } ?? [] )
                     completion(.success(""))
                 case .failure(let error):
                     completion(.failure(error))
@@ -45,8 +49,8 @@ class StocksViewModel {
         }
     }
     
-    func setupContinuousRequests(with tkeValues: [String]) {
-        let detailURL = URLs.stockDetailURL(with: tkeValues)
+    func setupContinuousRequests(with tkeValues: [String], forKeys keys: [String]) {
+        let detailURL = URLs.stockDetailURL(with: tkeValues, forKeys: keys)
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
                 self?.fetchStockDetails(url: detailURL)
@@ -59,6 +63,7 @@ class StocksViewModel {
         NetworkManager.shared.fetchData(type: StocksDetailsModel.self, url: url) { [weak self] result in
             switch result {
                 case .success(let dataa):
+                    print("\n\n\(dataa.l ?? [])")
                     self?.stocksDetails = dataa.l ?? []
                     self?.delegate?.didUpdateStockDetails()
                 case .failure(let error):

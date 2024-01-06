@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Welcome
+// MARK: - StocksModel
 struct StocksModel: Codable {
     var mypageDefaults: [MypageDefault]?
     var mypage: [Mypage]?
@@ -36,9 +36,10 @@ struct Mypage: Codable {
 }
 
 
+// MARK: - Second URL
 
-// MARK: - Other URL
-// MARK: - Welcome2
+
+// MARK: - StocksDetailsModel
 struct StocksDetailsModel: Codable {
     var l: [L]?
     var z: String?
@@ -46,5 +47,19 @@ struct StocksDetailsModel: Codable {
 
 // MARK: - L
 struct L: Codable {
-    var tke, clo, pdd, las: String?
+    var tke, clo, pdd, low, ddi, hig, las, pdc: String?
+    
+    func getValue(for key: String) -> String? {
+        switch key {
+            case "tke": return tke
+            case "clo": return clo
+            case "pdd": return pdd
+            case "low": return low
+            case "ddi": return ddi
+            case "hig": return hig
+            case "las": return las
+            case "pdc": return pdc
+            default: return nil
+        }
+    }
 }
