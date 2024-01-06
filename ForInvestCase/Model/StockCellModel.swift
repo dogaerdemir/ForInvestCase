@@ -13,4 +13,5 @@ struct StockCellModel {
     var previousClo: String?
     let selectedKeyForFirstButton: String?
     let selectedKeyForSecondButton: String?
+    let previousLasValue: String?
 }

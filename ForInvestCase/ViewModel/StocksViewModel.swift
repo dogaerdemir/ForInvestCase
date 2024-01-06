@@ -21,6 +21,7 @@ class StocksViewModel {
     private var stocksDetails: [L] = []
     
     private var previousCloValues: [String: String] = [:]
+    private var previousLasValues: [String: String] = [:]
     
     var selectedKeyForFirstButton: String?
     var selectedKeyForSecondButton: String?
@@ -31,6 +32,14 @@ class StocksViewModel {
     
     func getPreviousCloValue(for cod: String) -> String? {
         return previousCloValues[cod]
+    }
+    
+    func updatePreviousLasValue(for las: String, with value: String) {
+        previousCloValues[las] = value
+    }
+    
+    func getPreviousLasValue(for las: String) -> String? {
+        return previousCloValues[las]
     }
     
     func fetchStocksAndMenus(completion: @escaping (Result<String?, ErrorType>) -> Void) {
@@ -60,15 +69,24 @@ class StocksViewModel {
     }
     
     func fetchStockDetails(url: String) {
-        NetworkManager.shared.fetchData(type: StocksDetailsModel.self, url: url) { [weak self] result in
-            switch result {
-                case .success(let dataa):
-                    print("\n\n\(dataa.l ?? [])")
-                    self?.stocksDetails = dataa.l ?? []
-                    self?.delegate?.didUpdateStockDetails()
-                case .failure(let error):
-                    print(error.localizedDescription)
-            }
+        var mockStockDetails = [L]()
+        for stock in mypageDefaults {
+            let mockDetail = L(
+                tke: stock.tke,
+                clo: "\(Int.random(in: 1...24)):\(Int.random(in: 0...59))",
+                pdd: "\(Double.random(in: -2.0...2.0).formatted(.number.precision(.fractionLength(2))))%",
+                low: "\(Double.random(in: 100.0...200.0).formatted(.number.precision(.fractionLength(2))))",
+                ddi: "\(Double.random(in: -10.0...10.0).formatted(.number.precision(.fractionLength(2))))",
+                hig: "\(Double.random(in: 100.0...200.0).formatted(.number.precision(.fractionLength(2))))",
+                las: "\(Double.random(in: 100.0...200.0).formatted(.number.precision(.fractionLength(2))))",
+                pdc: "\(Double.random(in: 100.0...200.0).formatted(.number.precision(.fractionLength(2))))"
+            )
+            mockStockDetails.append(mockDetail)
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.stocksDetails = mockStockDetails
+            self?.delegate?.didUpdateStockDetails()
         }
     }
     

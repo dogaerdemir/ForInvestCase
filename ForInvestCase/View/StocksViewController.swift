@@ -73,15 +73,18 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
                 let stocks = vm.getStockInfo(at: indexPath.row)
                 let stockDetail = vm.getStockDetail(at: indexPath.row)
                 let previousClo = vm.getPreviousCloValue(for: stocks.cod ?? "")
+                let previousLas = vm.getPreviousLasValue(for: stocks.cod ?? "")
                 
                 let model = StockCellModel(stocks: stocks,
                                            stockDetail: stockDetail,
                                            previousClo: previousClo,
                                            selectedKeyForFirstButton: vm.selectedKeyForFirstButton,
-                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton)
+                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton,
+                                           previousLasValue: previousLas)
                 cell.configureCell(with: model)
                 
                 vm.updatePreviousCloValue(for: stocks.cod ?? "", with: stockDetail.clo ?? "")
+                vm.updatePreviousLasValue(for: stocks.cod ?? "", with: stockDetail.las ?? "")
             }
             return cell
         }

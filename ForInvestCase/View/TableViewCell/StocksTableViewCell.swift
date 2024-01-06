@@ -28,13 +28,37 @@ class StocksTableViewCell: UITableViewCell {
         clockLabel.text = model.stockDetail.clo
         
         if let keyForFirstButton = model.selectedKeyForFirstButton {
-            variableLabelOne.text = model.stockDetail.getValue(for: keyForFirstButton)
+            let text = model.stockDetail.getValue(for: keyForFirstButton)
+            if keyForFirstButton == "ddi" || keyForFirstButton == "pdd" {
+                if Double(text?.replacingOccurrences(of: ",", with: ".") ?? "0") ?? 0 > 0 {
+                    variableLabelOne.textColor = .systemGreen
+                } else {
+                    variableLabelOne.textColor = .red
+                }
+            } else {
+                variableLabelOne.textColor = .white
+            }
+            variableLabelOne.text = text
         }
         if let keyForSecondButton = model.selectedKeyForSecondButton {
-            variableLabelTwo.text = model.stockDetail.getValue(for: keyForSecondButton)
+            let text = model.stockDetail.getValue(for: keyForSecondButton)
+            if keyForSecondButton == "ddi" || keyForSecondButton == "pdd" {
+                if Double(text?.replacingOccurrences(of: ",", with: ".").replacingOccurrences(of: "%", with:"") ?? "0") ?? 0 > 0 {
+                    variableLabelTwo.textColor = .systemGreen
+                } else {
+                    variableLabelTwo.textColor = .red
+                }
+            } else {
+                variableLabelTwo.textColor = .white
+            }
+            variableLabelTwo.text = text
         }
         if let previousClo = model.previousClo, previousClo != model.stockDetail.clo {
             animateBackground()
+        }
+        
+        if let previousLas = model.previousLasValue, let currentLas = Double(model.stockDetail.las?.replacingOccurrences(of: ",", with: ".") ?? "0"), let previousLasDouble = Double(previousLas.replacingOccurrences(of: ",", with: ".")) {
+            indicatorImage.image = currentLas > previousLasDouble ? UIImage(named: "green_up") : UIImage(named: "red_down")
         }
     }
     
