@@ -28,7 +28,7 @@ class StocksViewController: UIViewController {
                         self.tableView.reloadData()
                     }
                 case .failure(let error):
-                    print(error)
+                    print(error.localizedDescription)
             }
         }
     }
@@ -37,21 +37,23 @@ class StocksViewController: UIViewController {
         var actions: [UIAction] = []
         
         for menuOption in vm.getMenus() {
-            let action = UIAction(title: menuOption.name ?? "N/A", handler: { [weak self] _ in
+            let isSelected = (button.tag == 1 && vm.getSelectedKeyForFirstButton() == menuOption.key) ||
+            (button.tag == 2 && vm.getSelectedKeyForSecondButton() == menuOption.key)
+            
+            let action = UIAction(title: menuOption.name ?? "N/A", state: isSelected ? .on : .off) { [weak self] _ in
                 if button.tag == 1 {
-                    self?.vm.selectedKeyForFirstButton = menuOption.key
+                    self?.vm.setSelectedKeyForFirstButton(with: menuOption.key)
                 } else if button.tag == 2 {
-                    self?.vm.selectedKeyForSecondButton = menuOption.key
+                    self?.vm.setSelectedKeyForSecondButton(with: menuOption.key)
                 }
                 button.setTitle(menuOption.name, for: .normal)
-                button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+
                 self?.tableView.reloadData()
-            })
+                button.menu = self?.createMenu(with: button)
+            }
             actions.append(action)
         }
-        
-        let menu = UIMenu(title: "", children: actions)
-        return menu
+        return UIMenu(title: "", children: actions)
     }
     
     @IBAction func headerButtonTapped(_ sender: UIButton) {
@@ -78,8 +80,8 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
                 let model = StockCellModel(stocks: stocks,
                                            stockDetail: stockDetail,
                                            previousClo: previousClo,
-                                           selectedKeyForFirstButton: vm.selectedKeyForFirstButton,
-                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton,
+                                           selectedKeyForFirstButton: vm.getSelectedKeyForFirstButton(),
+                                           selectedKeyForSecondButton: vm.getSelectedKeyForSecondButton(),
                                            previousLasValue: previousLas)
                 cell.configureCell(with: model)
                 

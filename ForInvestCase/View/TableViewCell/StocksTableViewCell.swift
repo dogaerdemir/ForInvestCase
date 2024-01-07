@@ -33,10 +33,10 @@ class StocksTableViewCell: UITableViewCell {
                 if Double(text?.replacingOccurrences(of: ",", with: ".") ?? "0") ?? 0 > 0 {
                     variableLabelOne.textColor = .systemGreen
                 } else {
-                    variableLabelOne.textColor = .red
+                    variableLabelOne.textColor = .systemRed
                 }
             } else {
-                variableLabelOne.textColor = .white
+                variableLabelOne.textColor = .appPrimaryLabel
             }
             variableLabelOne.text = text
         }
@@ -46,25 +46,26 @@ class StocksTableViewCell: UITableViewCell {
                 if Double(text?.replacingOccurrences(of: ",", with: ".").replacingOccurrences(of: "%", with:"") ?? "0") ?? 0 > 0 {
                     variableLabelTwo.textColor = .systemGreen
                 } else {
-                    variableLabelTwo.textColor = .red
+                    variableLabelTwo.textColor = .systemRed
                 }
             } else {
-                variableLabelTwo.textColor = .white
+                variableLabelTwo.textColor = .appPrimaryLabel
             }
             variableLabelTwo.text = text
         }
+        
         if let previousClo = model.previousClo, previousClo != model.stockDetail.clo {
             animateBackground()
         }
         
         if let previousLas = model.previousLasValue, let currentLas = Double(model.stockDetail.las?.replacingOccurrences(of: ",", with: ".") ?? "0"), let previousLasDouble = Double(previousLas.replacingOccurrences(of: ",", with: ".")) {
-            indicatorImage.image = currentLas > previousLasDouble ? UIImage(named: "green_up") : UIImage(named: "red_down")
+            indicatorImage.image = currentLas > previousLasDouble ? UIImage(resource: .greenUp) : UIImage(resource: .redDown)
         }
     }
     
     private func animateBackground() {
         self.layer.removeAllAnimations()
-        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
         UIView.animate(withDuration: 1.0, delay: 0.0, options: [.allowUserInteraction], animations: {
             self.backgroundColor = .clear
         })

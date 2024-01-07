@@ -52,35 +52,55 @@
                                 <constraint firstAttribute="width" constant="80" id="u4S-w6-Zzt"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" name="AppSecondaryLabeLColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ovs-Qr-GAU">
-                            <rect key="frame" x="209" y="17" width="70" height="26"/>
+                            <rect key="frame" x="203" y="17" width="70" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="26" id="T6S-4V-rHR"/>
                                 <constraint firstAttribute="width" constant="70" id="onH-bn-wrG"/>
                             </constraints>
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="gray" title="Son">
-                                <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
-                            </buttonConfiguration>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="tintColor" name="AppSecondaryLabeLColor"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Son"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="0.80000000000000004"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="headerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yxg-pq-FXL"/>
                             </connections>
                         </button>
                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wk5-ZW-wi4">
-                            <rect key="frame" x="315" y="17" width="70" height="26"/>
+                            <rect key="frame" x="309" y="17" width="70" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="uQo-Ou-15f"/>
                                 <constraint firstAttribute="height" constant="26" id="y5c-5e-Tc0"/>
                             </constraints>
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="gray" title="%Fark">
-                                <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
-                            </buttonConfiguration>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="tintColor" name="AppSecondaryLabeLColor"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="%Fark"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="0.80000000000000004"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="headerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hAG-Xe-qoR"/>
                             </connections>
@@ -94,7 +114,7 @@
                         <constraint firstItem="O9b-HM-akK" firstAttribute="leading" secondItem="xOJ-e0-5mm" secondAttribute="leading" constant="16" id="dbG-4k-4Wx"/>
                         <constraint firstItem="wk5-ZW-wi4" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="i8E-Ev-Mqj"/>
                         <constraint firstItem="wk5-ZW-wi4" firstAttribute="leading" secondItem="Ovs-Qr-GAU" secondAttribute="trailing" constant="36" id="qCK-y8-OqC"/>
-                        <constraint firstItem="xOJ-e0-5mm" firstAttribute="trailing" secondItem="wk5-ZW-wi4" secondAttribute="trailing" constant="8" id="w6x-X2-4X2"/>
+                        <constraint firstItem="xOJ-e0-5mm" firstAttribute="trailing" secondItem="wk5-ZW-wi4" secondAttribute="trailing" constant="14" id="w6x-X2-4X2"/>
                     </constraints>
                 </view>
             </objects>
@@ -104,6 +124,9 @@
     <resources>
         <namedColor name="AppBackgroundColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppSecondaryLabeLColor">
+            <color red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
