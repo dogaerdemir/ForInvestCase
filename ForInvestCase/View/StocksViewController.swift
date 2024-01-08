@@ -37,17 +37,16 @@ class StocksViewController: UIViewController {
         var actions: [UIAction] = []
         
         for menuOption in vm.getMenus() {
-            let isSelected = (button.tag == 1 && vm.getSelectedKeyForFirstButton() == menuOption.key) ||
-            (button.tag == 2 && vm.getSelectedKeyForSecondButton() == menuOption.key)
+            let isSelected = (button.tag == 1 && vm.selectedKeys.firstButton == menuOption.key) ||
+            (button.tag == 2 && vm.selectedKeys.secondButton == menuOption.key)
             
             let action = UIAction(title: menuOption.name ?? "N/A", state: isSelected ? .on : .off) { [weak self] _ in
                 if button.tag == 1 {
-                    self?.vm.setSelectedKeyForFirstButton(with: menuOption.key)
+                    self?.vm.selectedKeys.firstButton = menuOption.key
                 } else if button.tag == 2 {
-                    self?.vm.setSelectedKeyForSecondButton(with: menuOption.key)
+                    self?.vm.selectedKeys.secondButton = menuOption.key
                 }
                 button.setTitle(menuOption.name, for: .normal)
-
                 self?.tableView.reloadData()
                 button.menu = self?.createMenu(with: button)
             }
@@ -66,27 +65,28 @@ class StocksViewController: UIViewController {
 extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return vm.getStocksCount()
+        return vm.getStocks().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell") as? StocksTableViewCell {
-            if indexPath.row < vm.getStocksDetailCount() {
-                let stocks = vm.getStockInfo(at: indexPath.row)
-                let stockDetail = vm.getStockDetail(at: indexPath.row)
-                let previousClo = vm.getPreviousCloValue(for: stocks.cod ?? "")
-                let previousLas = vm.getPreviousLasValue(for: stocks.cod ?? "")
+            if indexPath.row < vm.getStocksDetail().count {
+                let stocks = vm.getStocks()[indexPath.row]
+                let stockDetail = vm.getStocksDetail()[indexPath.row]
+                let previousValues = vm.getPreviousValues(for: stocks.cod ?? "")
                 
                 let model = StockCellModel(stocks: stocks,
                                            stockDetail: stockDetail,
-                                           previousClo: previousClo,
-                                           selectedKeyForFirstButton: vm.getSelectedKeyForFirstButton(),
-                                           selectedKeyForSecondButton: vm.getSelectedKeyForSecondButton(),
-                                           previousLasValue: previousLas)
+                                           previousClo: previousValues?.clo,
+                                           selectedKeyForFirstButton: vm.selectedKeyForFirstButton,
+                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton,
+                                           previousLasValue: previousValues?.las)
                 cell.configureCell(with: model)
                 
-                vm.updatePreviousCloValue(for: stocks.cod ?? "", with: stockDetail.clo ?? "")
-                vm.updatePreviousLasValue(for: stocks.cod ?? "", with: stockDetail.las ?? "")
+                var updatedValues = previousValues ?? PreviousValues()
+                updatedValues.clo = stockDetail.clo
+                updatedValues.las = stockDetail.las
+                vm.setPreviousValues(for: stocks.cod ?? "", values: updatedValues)
             }
             return cell
         }

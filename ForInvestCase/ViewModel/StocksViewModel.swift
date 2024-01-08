@@ -13,18 +13,25 @@ protocol StocksViewModelDelegate: AnyObject {
 
 class StocksViewModel {
     
+    private var previousValues: [String: PreviousValues] = [:]
+    var selectedKeys = SelectedKeys()
+    
+    var selectedKeyForFirstButton: String? {
+        get { return selectedKeys.firstButton }
+        set { selectedKeys.firstButton = newValue }
+    }
+    
+    var selectedKeyForSecondButton: String? {
+        get { return selectedKeys.secondButton }
+        set { selectedKeys.secondButton = newValue }
+    }
+    
     weak var delegate: StocksViewModelDelegate?
     private var timer: Timer?
     
     private var mypageDefaults: [MypageDefault] = []
     private var mypage: [Mypage] = []
     private var stocksDetails: [L] = []
-    
-    private var previousCloValues: [String: String] = [:]
-    private var previousLasValues: [String: String] = [:]
-    
-    private var selectedKeyForFirstButton: String?
-    private var selectedKeyForSecondButton: String?
     
     func fetchStocksAndMenus(completion: @escaping (Result<String?, ErrorType>) -> Void) {
         NetworkManager.shared.fetchData(type: StocksModel.self, url: URLs.stockSettingsURL) { [weak self] result in
@@ -53,76 +60,35 @@ class StocksViewModel {
     }
     
     func fetchStockDetails(url: String) {
-        var mockStockDetails = [L]()
-        for stock in mypageDefaults {
-            let mockDetail = L(
-                tke: stock.tke,
-                clo: "\(Int.random(in: 1...24)):\(Int.random(in: 0...59))",
-                pdd: "\(Double.random(in: -2.0...2.0).formatted(.number.precision(.fractionLength(2))))%",
-                low: "\(Double.random(in: 100.0...200.0).formatted(.number.precision(.fractionLength(2))))",
-                ddi: "\(Double.random(in: -1000.0...20000.0).formatted(.number.precision(.fractionLength(2))))",
-                hig: "\(Double.random(in: 100.0...200.0).formatted(.number.precision(.fractionLength(2))))",
-                las: "\(Double.random(in: 1000.0...20000.0).formatted(.number.precision(.fractionLength(2))))",
-                pdc: "\(Double.random(in: 100.0...200.0).formatted(.number.precision(.fractionLength(2))))"
-            )
-            mockStockDetails.append(mockDetail)
-        }
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.stocksDetails = mockStockDetails
-            self?.delegate?.didUpdateStockDetails()
+        NetworkManager.shared.fetchData(type: StocksDetailsModel.self, url: url) { [weak self] result in
+            switch result {
+                case .success(let dataa):
+                    print("\n\n\(dataa.l ?? [])")
+                    self?.stocksDetails = dataa.l ?? []
+                    self?.delegate?.didUpdateStockDetails()
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
         }
     }
     
-    func updatePreviousCloValue(for cod: String, with value: String) {
-        previousCloValues[cod] = value
+    func getPreviousValues(for cod: String) -> PreviousValues? {
+        return previousValues[cod]
     }
     
-    func getPreviousCloValue(for cod: String) -> String? {
-        return previousCloValues[cod]
+    func setPreviousValues(for cod: String, values: PreviousValues) {
+        previousValues[cod] = values
     }
     
-    func updatePreviousLasValue(for las: String, with value: String) {
-        previousCloValues[las] = value
-    }
-    
-    func getPreviousLasValue(for las: String) -> String? {
-        return previousCloValues[las]
-    }
-    
-    func getStockInfo(at index: Int) -> MypageDefault {
-        return mypageDefaults[index]
-     }
-    
-    func getStocksCount() -> Int {
-        return mypageDefaults.count
+    func getStocks() -> [MypageDefault] {
+        return mypageDefaults
     }
     
     func getMenus() -> [Mypage] {
         return mypage
     }
     
-    func getStockDetail(at index: Int) -> L {
-        return stocksDetails[index]
-    }
-    
-    func getStocksDetailCount() -> Int {
-        return stocksDetails.count
-    }
-    
-    func getSelectedKeyForFirstButton() -> String? {
-        return selectedKeyForFirstButton
-    }
-    
-    func getSelectedKeyForSecondButton() -> String? {
-        return selectedKeyForSecondButton
-    }
-    
-    func setSelectedKeyForFirstButton(with key: String?) {
-        selectedKeyForFirstButton = key
-    }
-    
-    func setSelectedKeyForSecondButton(with key: String?) {
-        selectedKeyForSecondButton = key
+    func getStocksDetail() -> [L] {
+        return stocksDetails
     }
 }

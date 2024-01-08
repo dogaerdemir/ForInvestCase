@@ -24,42 +24,44 @@ class StocksTableViewCell: UITableViewCell {
     }
     
     func configureCell(with model: StockCellModel) {
-        nameLabel.text = model.stocks.cod
-        clockLabel.text = model.stockDetail.clo
+        nameLabel.text = model.stocks?.cod
+        clockLabel.text = model.stockDetail?.clo
+        indicatorImage.alpha = 1
         
-        if let keyForFirstButton = model.selectedKeyForFirstButton {
-            let text = model.stockDetail.getValue(for: keyForFirstButton)
-            if keyForFirstButton == "ddi" || keyForFirstButton == "pdd" {
-                if Double(text?.replacingOccurrences(of: ",", with: ".") ?? "0") ?? 0 > 0 {
-                    variableLabelOne.textColor = .systemGreen
-                } else {
-                    variableLabelOne.textColor = .systemRed
-                }
-            } else {
-                variableLabelOne.textColor = .appPrimaryLabel
-            }
-            variableLabelOne.text = text
-        }
-        if let keyForSecondButton = model.selectedKeyForSecondButton {
-            let text = model.stockDetail.getValue(for: keyForSecondButton)
-            if keyForSecondButton == "ddi" || keyForSecondButton == "pdd" {
-                if Double(text?.replacingOccurrences(of: ",", with: ".").replacingOccurrences(of: "%", with:"") ?? "0") ?? 0 > 0 {
-                    variableLabelTwo.textColor = .systemGreen
-                } else {
-                    variableLabelTwo.textColor = .systemRed
-                }
-            } else {
-                variableLabelTwo.textColor = .appPrimaryLabel
-            }
-            variableLabelTwo.text = text
-        }
+        configureLabel(variableLabelOne, withKey: model.selectedKeyForFirstButton, from: model)
+        configureLabel(variableLabelTwo, withKey: model.selectedKeyForSecondButton, from: model)
         
-        if let previousClo = model.previousClo, previousClo != model.stockDetail.clo {
+        checkForVisualChanges(with: model)
+    }
+    
+    private func configureLabel(_ label: UILabel, withKey key: String?, from model: StockCellModel) {
+        if let key = key {
+            let text = model.stockDetail?.getValue(for: key) ?? "N/A"
+            label.text = text
+            
+            if key == "ddi" || key == "pdd" {
+                label.textColor = Double(text.replacingOccurrences(of: ",", with: ".")) ?? 0 > 0 ? .systemGreen : .systemRed
+            } else {
+                label.textColor = .appPrimaryLabel
+            }
+        }
+    }
+    
+    private func checkForVisualChanges(with model: StockCellModel) {
+        if let previousClo = model.previousClo, previousClo != model.stockDetail?.clo {
             animateBackground()
         }
-        
-        if let previousLas = model.previousLasValue, let currentLas = Double(model.stockDetail.las?.replacingOccurrences(of: ",", with: ".") ?? "0"), let previousLasDouble = Double(previousLas.replacingOccurrences(of: ",", with: ".")) {
-            indicatorImage.image = currentLas > previousLasDouble ? UIImage(resource: .greenUp) : UIImage(resource: .redDown)
+        if let previousLas = model.previousLasValue,
+           let currentLas = Int(model.stockDetail?.las?.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "") ?? "0"),
+           let previousLasDouble = Int(previousLas.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")) {
+            
+            if currentLas > previousLasDouble {
+                indicatorImage.image = UIImage(named: "green_up")
+            } else if currentLas < previousLasDouble {
+                indicatorImage.image = UIImage(named: "red_down")
+            } else {
+                indicatorImage.alpha = 0
+            }
         }
     }
     
