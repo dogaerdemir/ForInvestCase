@@ -13,7 +13,14 @@ protocol StocksViewModelDelegate: AnyObject {
 
 class StocksViewModel {
     
+    private var networkManager: NetworkManaging
+    
+    init(networkManager: NetworkManaging = NetworkManager.shared) {
+        self.networkManager = networkManager
+    }
+    
     private var previousValues: [String: PreviousValues] = [:]
+    
     var selectedKeys = SelectedKeys()
     
     var selectedKeyForFirstButton: String? {
@@ -34,7 +41,7 @@ class StocksViewModel {
     private var stocksDetails: [L] = []
     
     func fetchStocksAndMenus(completion: @escaping (Result<String?, ErrorType>) -> Void) {
-        NetworkManager.shared.fetchData(type: StocksModel.self, url: URLs.stockSettingsURL) { [weak self] result in
+        networkManager.fetchData(type: StocksModel.self, url: URLs.stockSettingsURL) { [weak self] result in
             switch result {
                 case .success(let data):
                     self?.mypageDefaults = data.mypageDefaults ?? []
@@ -60,10 +67,9 @@ class StocksViewModel {
     }
     
     func fetchStockDetails(url: String) {
-        NetworkManager.shared.fetchData(type: StocksDetailsModel.self, url: url) { [weak self] result in
+        networkManager.fetchData(type: StocksDetailsModel.self, url: url) { [weak self] result in
             switch result {
                 case .success(let dataa):
-                    print("\n\n\(dataa.l ?? [])")
                     self?.stocksDetails = dataa.l ?? []
                     self?.delegate?.didUpdateStockDetails()
                 case .failure(let error):

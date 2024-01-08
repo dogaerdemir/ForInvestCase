@@ -19,6 +19,10 @@ class StocksViewController: UIViewController {
         vm.delegate = self
         tableView.register(UINib(nibName: "StocksTableViewCell", bundle: nil), forCellReuseIdentifier: "tableViewCell")
         
+        fetchData()
+    }
+    
+    func fetchData() {
         vm.fetchStocksAndMenus { [weak self] result in
             guard let self else { return }
             
@@ -28,7 +32,12 @@ class StocksViewController: UIViewController {
                         self.tableView.reloadData()
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        self.showAlert(title: "Error", message: error.errorMessage, actions: ("Dismiss", .default, nil), ("Retry", .cancel, { _ in
+                            self.fetchData()
+                        })
+                        )
+                    }
             }
         }
     }
@@ -78,9 +87,9 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
                 let model = StockCellModel(stocks: stocks,
                                            stockDetail: stockDetail,
                                            previousClo: previousValues?.clo,
+                                           previousLas: previousValues?.las,
                                            selectedKeyForFirstButton: vm.selectedKeyForFirstButton,
-                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton,
-                                           previousLasValue: previousValues?.las)
+                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton)
                 cell.configureCell(with: model)
                 
                 var updatedValues = previousValues ?? PreviousValues()
@@ -107,8 +116,6 @@ extension StocksViewController: StocksViewModelDelegate {
         DispatchQueue.main.async {
             if let indexPaths = self.tableView.indexPathsForVisibleRows {
                 self.tableView.reloadRows(at: indexPaths, with: .none)
-            } else {
-                print("No visible cells")
             }
         }
     }

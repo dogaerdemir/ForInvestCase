@@ -7,9 +7,22 @@
 
 import Foundation
 
+protocol NetworkManaging {
+    func fetchData<T: Decodable>(type: T.Type, url: String, completion: @escaping (Result<T, ErrorType>) -> Void)
+}
+
 enum ErrorType : Error {
-    case serverError
-    case parsingError
+    case serverError(String)
+    case parsingError(String)
+    
+    var errorMessage: String {
+        switch self {
+            case .serverError(let message):
+                return message
+            case .parsingError(let message):
+                return message
+        }
+    }
 }
 
 enum URLs {
@@ -23,24 +36,24 @@ enum URLs {
     }
 }
 
-class NetworkManager {
+class NetworkManager: NetworkManaging {
     static let shared = NetworkManager()
     
     private init() {}
     
     func fetchData<T: Decodable>(type: T.Type, url: String, completion: @escaping (Result<T, ErrorType>) -> ()) {
         guard let url = URL(string: url) else { return }
-
+        
         URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
-            if let data {
+            if let error = error {
+                completion(.failure(.serverError("Server Error: \(error.localizedDescription)")))
+            } else if let data = data {
                 do {
                     let dataModel = try JSONDecoder().decode(type.self, from: data)
                     completion(.success(dataModel))
                 } catch {
-                    completion(.failure(.parsingError))
+                    completion(.failure(.parsingError("Data Parsing Error: \(error.localizedDescription)")))
                 }
-            } else {
-                completion(.failure(.serverError))
             }
         }.resume()
     }

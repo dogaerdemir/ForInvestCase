@@ -51,7 +51,7 @@ class StocksTableViewCell: UITableViewCell {
         if let previousClo = model.previousClo, previousClo != model.stockDetail?.clo {
             animateBackground()
         }
-        if let previousLas = model.previousLasValue,
+        if let previousLas = model.previousLas,
            let currentLas = Int(model.stockDetail?.las?.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "") ?? "0"),
            let previousLasDouble = Int(previousLas.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")) {
             

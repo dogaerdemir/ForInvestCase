@@ -11,9 +11,9 @@ struct StockCellModel {
     let stocks: MypageDefault?
     let stockDetail: L?
     var previousClo: String?
+    let previousLas: String?
     let selectedKeyForFirstButton: String?
     let selectedKeyForSecondButton: String?
-    let previousLasValue: String?
 }
 
 struct PreviousValues {
