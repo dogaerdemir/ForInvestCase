@@ -24,23 +24,50 @@ class StocksTableViewCell: UITableViewCell {
     }
     
     func configureCell(with model: StockCellModel) {
-        nameLabel.text = model.stocks.cod
-        clockLabel.text = model.stockDetail.clo
+        nameLabel.text = model.stocks?.cod
+        clockLabel.text = model.stockDetail?.clo
+        indicatorImage.alpha = 1
         
-        if let keyForFirstButton = model.selectedKeyForFirstButton {
-            variableLabelOne.text = model.stockDetail.getValue(for: keyForFirstButton)
+        configureLabel(variableLabelOne, withKey: model.selectedKeyForFirstButton, from: model)
+        configureLabel(variableLabelTwo, withKey: model.selectedKeyForSecondButton, from: model)
+        
+        checkForVisualChanges(with: model)
+    }
+    
+    private func configureLabel(_ label: UILabel, withKey key: String?, from model: StockCellModel) {
+        if let key = key {
+            let text = model.stockDetail?.getValue(for: key) ?? "N/A"
+            label.text = text
+            
+            if key == "ddi" || key == "pdd" {
+                label.textColor = Double(text.replacingOccurrences(of: ",", with: ".")) ?? 0 > 0 ? .systemGreen : .systemRed
+            } else {
+                label.textColor = .appPrimaryLabel
+            }
         }
-        if let keyForSecondButton = model.selectedKeyForSecondButton {
-            variableLabelTwo.text = model.stockDetail.getValue(for: keyForSecondButton)
-        }
-        if let previousClo = model.previousClo, previousClo != model.stockDetail.clo {
+    }
+    
+    private func checkForVisualChanges(with model: StockCellModel) {
+        if let previousClo = model.previousClo, previousClo != model.stockDetail?.clo {
             animateBackground()
+        }
+        if let previousLas = model.previousLasValue,
+           let currentLas = Int(model.stockDetail?.las?.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "") ?? "0"),
+           let previousLasDouble = Int(previousLas.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")) {
+            
+            if currentLas > previousLasDouble {
+                indicatorImage.image = UIImage(named: "green_up")
+            } else if currentLas < previousLasDouble {
+                indicatorImage.image = UIImage(named: "red_down")
+            } else {
+                indicatorImage.alpha = 0
+            }
         }
     }
     
     private func animateBackground() {
         self.layer.removeAllAnimations()
-        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
         UIView.animate(withDuration: 1.0, delay: 0.0, options: [.allowUserInteraction], animations: {
             self.backgroundColor = .clear
         })

@@ -13,25 +13,25 @@ protocol StocksViewModelDelegate: AnyObject {
 
 class StocksViewModel {
     
+    private var previousValues: [String: PreviousValues] = [:]
+    var selectedKeys = SelectedKeys()
+    
+    var selectedKeyForFirstButton: String? {
+        get { return selectedKeys.firstButton }
+        set { selectedKeys.firstButton = newValue }
+    }
+    
+    var selectedKeyForSecondButton: String? {
+        get { return selectedKeys.secondButton }
+        set { selectedKeys.secondButton = newValue }
+    }
+    
     weak var delegate: StocksViewModelDelegate?
     private var timer: Timer?
     
     private var mypageDefaults: [MypageDefault] = []
     private var mypage: [Mypage] = []
     private var stocksDetails: [L] = []
-    
-    private var previousCloValues: [String: String] = [:]
-    
-    var selectedKeyForFirstButton: String?
-    var selectedKeyForSecondButton: String?
-    
-    func updatePreviousCloValue(for cod: String, with value: String) {
-        previousCloValues[cod] = value
-    }
-    
-    func getPreviousCloValue(for cod: String) -> String? {
-        return previousCloValues[cod]
-    }
     
     func fetchStocksAndMenus(completion: @escaping (Result<String?, ErrorType>) -> Void) {
         NetworkManager.shared.fetchData(type: StocksModel.self, url: URLs.stockSettingsURL) { [weak self] result in
@@ -72,41 +72,23 @@ class StocksViewModel {
         }
     }
     
-    func getStocksInfo() -> [MypageDefault] {
+    func getPreviousValues(for cod: String) -> PreviousValues? {
+        return previousValues[cod]
+    }
+    
+    func setPreviousValues(for cod: String, values: PreviousValues) {
+        previousValues[cod] = values
+    }
+    
+    func getStocks() -> [MypageDefault] {
         return mypageDefaults
     }
-    
-    func getStockInfo(at index: Int) -> MypageDefault {
-        return mypageDefaults[index]
-     }
-    
-    func getStocksCount() -> Int {
-        return mypageDefaults.count
-    }
-    
     
     func getMenus() -> [Mypage] {
         return mypage
     }
     
-    func getMenusCount() -> Int {
-        return mypage.count
-    }
-    
-    func getMenu(at index: Int) -> Mypage {
-        return mypage[index]
-    }
-    
-    
     func getStocksDetail() -> [L] {
         return stocksDetails
-    }
-    
-    func getStockDetail(at index: Int) -> L {
-        return stocksDetails[index]
-    }
-    
-    func getStocksDetailCount() -> Int {
-        return stocksDetails.count
     }
 }

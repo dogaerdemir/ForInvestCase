@@ -28,7 +28,7 @@ class StocksViewController: UIViewController {
                         self.tableView.reloadData()
                     }
                 case .failure(let error):
-                    print(error)
+                    print(error.localizedDescription)
             }
         }
     }
@@ -37,21 +37,22 @@ class StocksViewController: UIViewController {
         var actions: [UIAction] = []
         
         for menuOption in vm.getMenus() {
-            let action = UIAction(title: menuOption.name ?? "N/A", handler: { [weak self] _ in
+            let isSelected = (button.tag == 1 && vm.selectedKeys.firstButton == menuOption.key) ||
+            (button.tag == 2 && vm.selectedKeys.secondButton == menuOption.key)
+            
+            let action = UIAction(title: menuOption.name ?? "N/A", state: isSelected ? .on : .off) { [weak self] _ in
                 if button.tag == 1 {
-                    self?.vm.selectedKeyForFirstButton = menuOption.key
+                    self?.vm.selectedKeys.firstButton = menuOption.key
                 } else if button.tag == 2 {
-                    self?.vm.selectedKeyForSecondButton = menuOption.key
+                    self?.vm.selectedKeys.secondButton = menuOption.key
                 }
                 button.setTitle(menuOption.name, for: .normal)
-                button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
                 self?.tableView.reloadData()
-            })
+                button.menu = self?.createMenu(with: button)
+            }
             actions.append(action)
         }
-        
-        let menu = UIMenu(title: "", children: actions)
-        return menu
+        return UIMenu(title: "", children: actions)
     }
     
     @IBAction func headerButtonTapped(_ sender: UIButton) {
@@ -64,24 +65,28 @@ class StocksViewController: UIViewController {
 extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return vm.getStocksCount()
+        return vm.getStocks().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell") as? StocksTableViewCell {
-            if indexPath.row < vm.getStocksDetailCount() {
-                let stocks = vm.getStockInfo(at: indexPath.row)
-                let stockDetail = vm.getStockDetail(at: indexPath.row)
-                let previousClo = vm.getPreviousCloValue(for: stocks.cod ?? "")
+            if indexPath.row < vm.getStocksDetail().count {
+                let stocks = vm.getStocks()[indexPath.row]
+                let stockDetail = vm.getStocksDetail()[indexPath.row]
+                let previousValues = vm.getPreviousValues(for: stocks.cod ?? "")
                 
                 let model = StockCellModel(stocks: stocks,
                                            stockDetail: stockDetail,
-                                           previousClo: previousClo,
+                                           previousClo: previousValues?.clo,
                                            selectedKeyForFirstButton: vm.selectedKeyForFirstButton,
-                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton)
+                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton,
+                                           previousLasValue: previousValues?.las)
                 cell.configureCell(with: model)
                 
-                vm.updatePreviousCloValue(for: stocks.cod ?? "", with: stockDetail.clo ?? "")
+                var updatedValues = previousValues ?? PreviousValues()
+                updatedValues.clo = stockDetail.clo
+                updatedValues.las = stockDetail.las
+                vm.setPreviousValues(for: stocks.cod ?? "", values: updatedValues)
             }
             return cell
         }

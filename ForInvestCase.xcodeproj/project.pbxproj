@@ -19,6 +19,7 @@
 		DA46E5E12B45F3D10070821A /* StocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46E5E02B45F3D10070821A /* StocksViewModel.swift */; };
 		DA46E5E42B45F4760070821A /* StocksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46E5E32B45F4750070821A /* StocksModel.swift */; };
 		DAA0C9BD2B4857A900D1A2A2 /* StockCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0C9BC2B4857A900D1A2A2 /* StockCellModel.swift */; };
+		DACF5D912B4AC15A00944D2F /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACF5D902B4AC15A00944D2F /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		DA46E5E02B45F3D10070821A /* StocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewModel.swift; sourceTree = "<group>"; };
 		DA46E5E32B45F4750070821A /* StocksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksModel.swift; sourceTree = "<group>"; };
 		DAA0C9BC2B4857A900D1A2A2 /* StockCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCellModel.swift; sourceTree = "<group>"; };
+		DACF5D902B4AC15A00944D2F /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,11 +82,12 @@
 		DA46E5C12B45997F0070821A /* ForInvestCase */ = {
 			isa = PBXGroup;
 			children = (
-				DA29B0202B46211F0058A7EB /* Support */,
+				DACF5D8F2B4AC14B00944D2F /* Extension */,
 				DA46E5D62B45D4580070821A /* Webservice */,
 				DA46E5E22B45F46A0070821A /* Model */,
 				DA46E5D92B45D5E90070821A /* ViewModel */,
 				DA46E5DA2B45D6040070821A /* View */,
+				DA29B0202B46211F0058A7EB /* Support */,
 			);
 			path = ForInvestCase;
 			sourceTree = "<group>";
@@ -131,6 +134,14 @@
 				DAA0C9BC2B4857A900D1A2A2 /* StockCellModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		DACF5D8F2B4AC14B00944D2F /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DACF5D902B4AC15A00944D2F /* UIView+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +219,7 @@
 				DA46E5DE2B45D6C70070821A /* StocksTableViewCell.swift in Sources */,
 				DA46E5D82B45D4680070821A /* NetworkManager.swift in Sources */,
 				DA46E5C72B45997F0070821A /* StocksViewController.swift in Sources */,
+				DACF5D912B4AC15A00944D2F /* UIView+Extension.swift in Sources */,
 				DA46E5E42B45F4760070821A /* StocksModel.swift in Sources */,
 				DAA0C9BD2B4857A900D1A2A2 /* StockCellModel.swift in Sources */,
 				DA46E5C32B45997F0070821A /* AppDelegate.swift in Sources */,
