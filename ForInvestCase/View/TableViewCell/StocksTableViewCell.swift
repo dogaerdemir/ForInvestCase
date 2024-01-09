@@ -40,7 +40,14 @@ class StocksTableViewCell: UITableViewCell {
             label.text = text
             
             if key == "ddi" || key == "pdd" {
-                label.textColor = Double(text.replacingOccurrences(of: ",", with: ".")) ?? 0 > 0 ? .systemGreen : .systemRed
+                let value = Double(text.replacingOccurrences(of: ",", with: ".")) ?? 0
+                if value > 0 {
+                    label.textColor = .systemGreen
+                } else if value < 0 {
+                    label.textColor = .systemRed
+                } else {
+                    label.textColor = .appPrimaryLabel
+                }
             } else {
                 label.textColor = .appPrimaryLabel
             }
