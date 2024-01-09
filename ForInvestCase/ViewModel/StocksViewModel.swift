@@ -56,7 +56,7 @@ class StocksViewModel {
         }
     }
     
-    func setupContinuousRequests(with tkeValues: [String], forKeys keys: [String]) {
+    private func setupContinuousRequests(with tkeValues: [String], forKeys keys: [String]) {
         let detailURL = URLs.stockDetailURL(with: tkeValues, forKeys: keys)
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
@@ -66,7 +66,7 @@ class StocksViewModel {
         }
     }
     
-    func fetchStockDetails(url: String) {
+    private func fetchStockDetails(url: String) {
         networkManager.fetchData(type: StocksDetailsModel.self, url: url) { [weak self] result in
             switch result {
                 case .success(let dataa):
