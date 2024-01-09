@@ -46,7 +46,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sembol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9b-HM-akK">
-                            <rect key="frame" x="16" y="21.666666666666668" width="80" height="17.000000000000004"/>
+                            <rect key="frame" x="18" y="21.666666666666668" width="80" height="17.000000000000004"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="17" id="OZe-Ku-nil"/>
                                 <constraint firstAttribute="width" constant="80" id="u4S-w6-Zzt"/>
@@ -56,7 +56,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ovs-Qr-GAU">
-                            <rect key="frame" x="203" y="17" width="70" height="26"/>
+                            <rect key="frame" x="202" y="17" width="70" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="26" id="T6S-4V-rHR"/>
                                 <constraint firstAttribute="width" constant="70" id="onH-bn-wrG"/>
@@ -81,7 +81,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wk5-ZW-wi4">
-                            <rect key="frame" x="309" y="17" width="70" height="26"/>
+                            <rect key="frame" x="308" y="17" width="70" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="uQo-Ou-15f"/>
                                 <constraint firstAttribute="height" constant="26" id="y5c-5e-Tc0"/>
@@ -111,10 +111,10 @@
                     <constraints>
                         <constraint firstItem="O9b-HM-akK" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="Aec-ci-XIj"/>
                         <constraint firstItem="Ovs-Qr-GAU" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="PEK-ku-cho"/>
-                        <constraint firstItem="O9b-HM-akK" firstAttribute="leading" secondItem="xOJ-e0-5mm" secondAttribute="leading" constant="16" id="dbG-4k-4Wx"/>
+                        <constraint firstItem="O9b-HM-akK" firstAttribute="leading" secondItem="xOJ-e0-5mm" secondAttribute="leading" constant="18" id="dbG-4k-4Wx"/>
                         <constraint firstItem="wk5-ZW-wi4" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="i8E-Ev-Mqj"/>
                         <constraint firstItem="wk5-ZW-wi4" firstAttribute="leading" secondItem="Ovs-Qr-GAU" secondAttribute="trailing" constant="36" id="qCK-y8-OqC"/>
-                        <constraint firstItem="xOJ-e0-5mm" firstAttribute="trailing" secondItem="wk5-ZW-wi4" secondAttribute="trailing" constant="14" id="w6x-X2-4X2"/>
+                        <constraint firstItem="xOJ-e0-5mm" firstAttribute="trailing" secondItem="wk5-ZW-wi4" secondAttribute="trailing" constant="15" id="w6x-X2-4X2"/>
                     </constraints>
                 </view>
             </objects>
@@ -126,7 +126,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AppSecondaryLabeLColor">
-            <color red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.45490196078431372" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

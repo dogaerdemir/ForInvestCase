@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol NetworkManaging {
+protocol NetworkManagerProtocol {
     func fetchData<T: Decodable>(type: T.Type, url: String, completion: @escaping (Result<T, ErrorType>) -> Void)
 }
 
-enum ErrorType : Error {
+enum ErrorType: Error {
     case serverError(String)
     case parsingError(String)
     
@@ -36,7 +36,7 @@ enum URLs {
     }
 }
 
-class NetworkManager: NetworkManaging {
+class NetworkManager: NetworkManagerProtocol {
     static let shared = NetworkManager()
     
     private init() {}
@@ -44,7 +44,11 @@ class NetworkManager: NetworkManaging {
     func fetchData<T: Decodable>(type: T.Type, url: String, completion: @escaping (Result<T, ErrorType>) -> ()) {
         guard let url = URL(string: url) else { return }
         
-        URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 5
+        let session = URLSession(configuration: config)
+        
+        session.dataTask(with: URLRequest(url: url)) { data, response, error in
             if let error = error {
                 completion(.failure(.serverError("Server Error: \(error.localizedDescription)")))
             } else if let data = data {

@@ -12,18 +12,18 @@ class StocksViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var tableViewHeaderView: UIView!
     
-    let vm = StocksViewModel()
+    let viewModel = StocksViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        vm.delegate = self
+        viewModel.delegate = self
         tableView.register(UINib(nibName: "StocksTableViewCell", bundle: nil), forCellReuseIdentifier: "tableViewCell")
         
         fetchData()
     }
     
-    func fetchData() {
-        vm.fetchStocksAndMenus { [weak self] result in
+    private func fetchData() {
+        viewModel.fetchStocksAndMenus { [weak self] result in
             guard let self else { return }
             
             switch result {
@@ -42,18 +42,18 @@ class StocksViewController: UIViewController {
         }
     }
     
-    func createMenu(with button: UIButton) -> UIMenu {
+    private func createMenu(with button: UIButton) -> UIMenu {
         var actions: [UIAction] = []
         
-        for menuOption in vm.getMenus() {
-            let isSelected = (button.tag == 1 && vm.selectedKeys.firstButton == menuOption.key) ||
-            (button.tag == 2 && vm.selectedKeys.secondButton == menuOption.key)
+        for menuOption in viewModel.getMenus() {
+            let isSelected = (button.tag == 1 && viewModel.selectedKeys.firstButton == menuOption.key) ||
+            (button.tag == 2 && viewModel.selectedKeys.secondButton == menuOption.key)
             
             let action = UIAction(title: menuOption.name ?? "N/A", state: isSelected ? .on : .off) { [weak self] _ in
                 if button.tag == 1 {
-                    self?.vm.selectedKeys.firstButton = menuOption.key
+                    self?.viewModel.selectedKeys.firstButton = menuOption.key
                 } else if button.tag == 2 {
-                    self?.vm.selectedKeys.secondButton = menuOption.key
+                    self?.viewModel    .selectedKeys.secondButton = menuOption.key
                 }
                 button.setTitle(menuOption.name, for: .normal)
                 self?.tableView.reloadData()
@@ -74,28 +74,28 @@ class StocksViewController: UIViewController {
 extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return vm.getStocks().count
+        return viewModel.getStocks().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell") as? StocksTableViewCell {
-            if indexPath.row < vm.getStocksDetail().count {
-                let stocks = vm.getStocks()[indexPath.row]
-                let stockDetail = vm.getStocksDetail()[indexPath.row]
-                let previousValues = vm.getPreviousValues(for: stocks.cod ?? "")
+            if indexPath.row < viewModel.getStocksDetail().count {
+                let stocks = viewModel.getStocks()[indexPath.row]
+                let stockDetail = viewModel.getStocksDetail()[indexPath.row]
+                let previousValues = viewModel.getPreviousValues(for: stocks.cod ?? "")
                 
                 let model = StockCellModel(stocks: stocks,
                                            stockDetail: stockDetail,
                                            previousClo: previousValues?.clo,
                                            previousLas: previousValues?.las,
-                                           selectedKeyForFirstButton: vm.selectedKeyForFirstButton,
-                                           selectedKeyForSecondButton: vm.selectedKeyForSecondButton)
+                                           selectedKeyForFirstButton: viewModel.selectedKeyForFirstButton,
+                                           selectedKeyForSecondButton: viewModel.selectedKeyForSecondButton)
                 cell.configureCell(with: model)
                 
                 var updatedValues = previousValues ?? PreviousValues()
                 updatedValues.clo = stockDetail.clo
                 updatedValues.las = stockDetail.las
-                vm.setPreviousValues(for: stocks.cod ?? "", values: updatedValues)
+                viewModel.setPreviousValues(for: stocks.cod ?? "", values: updatedValues)
             }
             return cell
         }

@@ -13,15 +13,20 @@ protocol StocksViewModelDelegate: AnyObject {
 
 class StocksViewModel {
     
-    private var networkManager: NetworkManaging
-    
-    init(networkManager: NetworkManaging = NetworkManager.shared) {
+    init(networkManager: NetworkManagerProtocol = NetworkManager.shared) {
         self.networkManager = networkManager
     }
     
-    private var previousValues: [String: PreviousValues] = [:]
+    private var networkManager: NetworkManagerProtocol
+    private var timer: Timer?
+    weak var delegate: StocksViewModelDelegate?
     
+    private var previousValues: [String: PreviousValues] = [:]
     var selectedKeys = SelectedKeys()
+    
+    private var mypageDefaults: [MypageDefault] = []
+    private var mypage: [Mypage] = []
+    private var stocksDetails: [L] = []
     
     var selectedKeyForFirstButton: String? {
         get { return selectedKeys.firstButton }
@@ -32,13 +37,6 @@ class StocksViewModel {
         get { return selectedKeys.secondButton }
         set { selectedKeys.secondButton = newValue }
     }
-    
-    weak var delegate: StocksViewModelDelegate?
-    private var timer: Timer?
-    
-    private var mypageDefaults: [MypageDefault] = []
-    private var mypage: [Mypage] = []
-    private var stocksDetails: [L] = []
     
     func fetchStocksAndMenus(completion: @escaping (Result<String?, ErrorType>) -> Void) {
         networkManager.fetchData(type: StocksModel.self, url: URLs.stockSettingsURL) { [weak self] result in

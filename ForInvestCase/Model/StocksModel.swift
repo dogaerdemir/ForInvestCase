@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - StocksModel
+// MARK: - First URL - StocksModel
 struct StocksModel: Codable {
     var mypageDefaults: [MypageDefault]?
     var mypage: [Mypage]?
@@ -33,21 +33,39 @@ struct MypageDefault: Codable {
 // MARK: - Mypage
 struct Mypage: Codable {
     var name, key: String?
+    
+    enum CodingKeys: CodingKey {
+        case name
+        case key
+    }
 }
 
 
-// MARK: - Second URL
-
-
-// MARK: - StocksDetailsModel
+// MARK: - Second URL - StocksDetailsModel
 struct StocksDetailsModel: Codable {
     var l: [L]?
     var z: String?
+    
+    enum CodingKeys: CodingKey {
+        case l
+        case z
+    }
 }
 
 // MARK: - L
 struct L: Codable {
     var tke, clo, pdd, low, ddi, hig, las, pdc: String?
+    
+    enum CodingKeys: CodingKey {
+        case tke
+        case clo
+        case pdd
+        case low
+        case ddi
+        case hig
+        case las
+        case pdc
+    }
     
     func getValue(for key: String) -> String? {
         switch key {
