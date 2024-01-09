@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="54" estimatedRowHeight="54" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Gta-ji-9Ta">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="119" width="393" height="699"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" name="AppBackgroundColor"/>
                                 <connections>
@@ -25,98 +25,94 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="qKh-Ku-3CI"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" id="t1C-gW-Odv">
+                                <rect key="frame" x="0.0" y="59" width="393" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sembol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9b-HM-akK">
+                                        <rect key="frame" x="24" y="21.666666666666671" width="80" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="OZe-Ku-nil"/>
+                                            <constraint firstAttribute="width" constant="80" id="u4S-w6-Zzt"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" name="AppSecondaryLabeLColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ovs-Qr-GAU">
+                                        <rect key="frame" x="201" y="17" width="70" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="T6S-4V-rHR"/>
+                                            <constraint firstAttribute="width" constant="70" id="onH-bn-wrG"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="tintColor" name="AppSecondaryLabeLColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Son"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.80000000000000004"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wk5-ZW-wi4">
+                                        <rect key="frame" x="307" y="17" width="70" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="uQo-Ou-15f"/>
+                                            <constraint firstAttribute="height" constant="26" id="y5c-5e-Tc0"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="tintColor" name="AppSecondaryLabeLColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="%Fark"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.80000000000000004"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                                <viewLayoutGuide key="safeArea" id="xOJ-e0-5mm"/>
+                                <color key="backgroundColor" name="AppBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="O9b-HM-akK" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="Aec-ci-XIj"/>
+                                    <constraint firstItem="Ovs-Qr-GAU" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="PEK-ku-cho"/>
+                                    <constraint firstItem="O9b-HM-akK" firstAttribute="leading" secondItem="xOJ-e0-5mm" secondAttribute="leading" constant="24" id="dbG-4k-4Wx"/>
+                                    <constraint firstItem="wk5-ZW-wi4" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="i8E-Ev-Mqj"/>
+                                    <constraint firstItem="wk5-ZW-wi4" firstAttribute="leading" secondItem="Ovs-Qr-GAU" secondAttribute="trailing" constant="36" id="qCK-y8-OqC"/>
+                                    <constraint firstItem="xOJ-e0-5mm" firstAttribute="trailing" secondItem="wk5-ZW-wi4" secondAttribute="trailing" constant="16" id="w6x-X2-4X2"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="AppBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Gta-ji-9Ta" secondAttribute="trailing" id="IwB-sR-qk9"/>
+                            <constraint firstItem="Gta-ji-9Ta" firstAttribute="top" secondItem="t1C-gW-Odv" secondAttribute="bottom" id="PdI-iN-agr"/>
                             <constraint firstItem="Gta-ji-9Ta" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZmD-C5-eVO"/>
                             <constraint firstItem="Gta-ji-9Ta" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="hpv-gn-z7d"/>
-                            <constraint firstItem="Gta-ji-9Ta" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iLi-qP-6Nr"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="leftButton" destination="Ovs-Qr-GAU" id="DFT-Eh-6mY"/>
+                        <outlet property="rightButton" destination="wk5-ZW-wi4" id="heO-9a-cBT"/>
                         <outlet property="tableView" destination="Gta-ji-9Ta" id="oEc-uv-Z1m"/>
-                        <outlet property="tableViewHeaderView" destination="t1C-gW-Odv" id="bih-yX-Szj"/>
+                        <outlet property="topView" destination="t1C-gW-Odv" id="FRY-k0-XEw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="t1C-gW-Odv">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sembol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9b-HM-akK">
-                            <rect key="frame" x="18" y="21.666666666666668" width="80" height="17.000000000000004"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="17" id="OZe-Ku-nil"/>
-                                <constraint firstAttribute="width" constant="80" id="u4S-w6-Zzt"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" name="AppSecondaryLabeLColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ovs-Qr-GAU">
-                            <rect key="frame" x="202" y="17" width="70" height="26"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="26" id="T6S-4V-rHR"/>
-                                <constraint firstAttribute="width" constant="70" id="onH-bn-wrG"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="tintColor" name="AppSecondaryLabeLColor"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Son"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                    <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="4"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                    <real key="value" value="0.80000000000000004"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="headerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yxg-pq-FXL"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wk5-ZW-wi4">
-                            <rect key="frame" x="308" y="17" width="70" height="26"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="70" id="uQo-Ou-15f"/>
-                                <constraint firstAttribute="height" constant="26" id="y5c-5e-Tc0"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="tintColor" name="AppSecondaryLabeLColor"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="%Fark"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                    <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="4"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                    <real key="value" value="0.80000000000000004"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="headerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hAG-Xe-qoR"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <viewLayoutGuide key="safeArea" id="xOJ-e0-5mm"/>
-                    <color key="backgroundColor" name="AppBackgroundColor"/>
-                    <constraints>
-                        <constraint firstItem="O9b-HM-akK" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="Aec-ci-XIj"/>
-                        <constraint firstItem="Ovs-Qr-GAU" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="PEK-ku-cho"/>
-                        <constraint firstItem="O9b-HM-akK" firstAttribute="leading" secondItem="xOJ-e0-5mm" secondAttribute="leading" constant="18" id="dbG-4k-4Wx"/>
-                        <constraint firstItem="wk5-ZW-wi4" firstAttribute="centerY" secondItem="t1C-gW-Odv" secondAttribute="centerY" id="i8E-Ev-Mqj"/>
-                        <constraint firstItem="wk5-ZW-wi4" firstAttribute="leading" secondItem="Ovs-Qr-GAU" secondAttribute="trailing" constant="36" id="qCK-y8-OqC"/>
-                        <constraint firstItem="xOJ-e0-5mm" firstAttribute="trailing" secondItem="wk5-ZW-wi4" secondAttribute="trailing" constant="15" id="w6x-X2-4X2"/>
-                    </constraints>
-                </view>
             </objects>
             <point key="canvasLocation" x="70.992366412213741" y="-27.464788732394368"/>
         </scene>

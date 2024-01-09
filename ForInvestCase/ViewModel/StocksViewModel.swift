@@ -9,6 +9,7 @@ import Foundation
 
 protocol StocksViewModelDelegate: AnyObject {
     func didUpdateStockDetails()
+    func didFirstUpdate()
 }
 
 class StocksViewModel {
@@ -19,6 +20,7 @@ class StocksViewModel {
     
     private var networkManager: NetworkManagerProtocol
     private var timer: Timer?
+    private var isFirstLoad = false
     weak var delegate: StocksViewModelDelegate?
     
     private var previousValues: [String: PreviousValues] = [:]
@@ -69,7 +71,12 @@ class StocksViewModel {
             switch result {
                 case .success(let dataa):
                     self?.stocksDetails = dataa.l ?? []
-                    self?.delegate?.didUpdateStockDetails()
+                    if !(self?.isFirstLoad ?? false) {
+                        self?.isFirstLoad = true
+                        self?.delegate?.didFirstUpdate()
+                    } else {
+                        self?.delegate?.didUpdateStockDetails()
+                    }
                 case .failure(let error):
                     print(error.localizedDescription)
             }
